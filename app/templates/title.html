@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>	
+		<meta name="author" content= "{{ owner_name }}">
+		{% for data in pagedata %}
+		<meta name="keywords" content= "{{ data.keywords }}">
+		<meta name="description" content= "{{ data.description }}">
+	
+		<title>{{ data.title }}</title>
+	</head>
+	<body style="background-color: #CCEEFF">
+		<div>
+		<a href="{{ url_for('mongopages') }}">Back to Pages</a>
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		
+		<h1>{{ data.title }}</h1>
+		<div><p style="font-size:22px"><b>Author: {{ owner_name }}</b></p><div>
+		<div><p style="font-size:16px"><b>Tag: {{ data.tag }}</b></p>
+		<div><p style="font-size:16px"><b>Keywords: {{ data.keywords }}</b></p>
+		<p style="font-size:16px">Description: {{ data.description }}</p></div>
+		
+		<div><p style="font-size:14px">{{ data.body }}</p>
+		
+		<fieldset style="width: 50px">
+			<legend>Files</legend>
+			{% if arrayfiles == []%}
+				<p>no files<p>
+			{% else %}
+				{% for file in arrayfiles %}
+				<a href="/mongopages/{{ title }}/{{ file }}">{{ file }}</a>
+				{% endfor %}
+			{% endif %}
+		</fieldset>
+	</body>
+		{% endfor %}
+	<form action="" method="post" novalidate>	
+		{{ form.hidden_tag() }}
+		<p>{{ form.editpage() }}</p>
+	</form>
+</html>

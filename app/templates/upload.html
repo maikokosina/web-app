@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+	{% block content %}
+	
+	<form method="post" enctype="mutlipart/form-data">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.nameavatar(size=32) }}<br>
+			{% for error in form.nameavatar.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.upload(size=32) }}<br>
+			{% for error in form.upload.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+	</form>
+	
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+	{% block content %}
+	
+	{% if check_type == 1 %}
+	<div>
+		<a href="{{ url_for('data') }}">Data</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+	</div>
+	{% endif %}
+	{% if check_type == 2 %}
+	<div>
+		<a href="{{ url_for('mongopages') }}">Pages</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+	</div>
+	{% endif %}
+	{% if check_type == 3 %}
+	<div>
+		<a href="{{ url_for('home') }}">Logout</a>
+	</div>
+	{% endif %}
+	{% if check_type == 4 %}
+	<div>
+		<a href="{{ url_for('home') }}">Logout</a>
+	</div>
+	{% endif %}
+	
+	<h1>My Profile</h1>
+	<table  cellspacing="10">
+	<tr>
+	<td align="center"><b>Hi, {{ name }}!<b></td>
+	
+	<td valign="bottom">
+	{% if avatar == '' %}
+	<img src="{{ avatars.default(size='s') }}">
+	{% else %}
+	<img alt="avatar"
+	src="data:image/png;base64, {{ avatar }}" width="50px" vspace="5" hspace="5">
+	{% endif %}
+	</td></tr>
+	<tr><td align="center">
+	<p>My role: <br>
+	{% if check_type == 1 %}
+	administrator</p>
+	{% endif %}
+	
+	{% if check_type == 2 %}
+	editor</p>
+	{% endif %}
+	
+	{% if check_type == 3 %}
+	reader</p>
+	{% endif %}
+	
+	{% if check_type == 4 %}
+	bot</p>
+	{% endif %}
+	</td>
+	
+	<td>
+	<form action="/profile/editavatar" method="post" novalidate enctype="multipart/form-data">
+		<input type="file" id="nameavatar" name="nameavatar" accept=".jpg, .jpeg, .png"><br>
+		<button type="submit">Change Avatar</button><br>
+	</form>
+	<form action="/profile/deleteavatar" method="post" novalidate>
+		<input type="submit" value="Delete Avatar"><br>
+	</form>
+	</td></tr>
+	
+{% endblock %}

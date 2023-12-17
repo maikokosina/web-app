@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+	{% block content %}
+		{% if check_type == 1 %}
+		<div> 
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('data') }}">Back to Data</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		{% endif %}
+		{% if check_type == 2 %}
+		<div> 
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		{% endif %}
+		
+		<h1>Pages</h1>
+		<div class="scroll">
+		<table border = "1">
+		<tr><th>ID</th><th>Owner</th><th>Tag</th><th>Title</th><th>Description</th><th>Keywords</th><th>Body</th><th>Files</th></tr>
+		
+		{% for line in all_pages %}
+		<tr>
+			<td>{{line.page_id}}</td>
+			<td>{{line.owner_id}}</td>
+			<td>{{line.tag}}</td>
+			<td><a href="/mongopages/{{line.title}}">{{line.title}}</a></td>
+			<td>{{line.description}}</td>
+			<td>{{line.keywords}}</td>
+			<td>{{line.body}}</td>
+				{% if arrayfiles[loop.index-1] == ''%}
+					<td>no files</td></tr>
+				{% else %}
+					<td>{{ arrayfiles[loop.index-1] }}</td></tr>
+				{% endif %}
+		{% endfor %}
+		</tr>	
+		</table>
+		</div>
+	
+	<p></p>
+	
+	{% if check_type == 1 %}
+	<table>
+	<tr><td>
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Add Page</legend>
+		{{ form1.hidden_tag() }}
+			<p>
+			{{ form1.addowner_id.label }}<br>
+			{{ form1.addowner_id(size=32) }}<br>
+			{% for error in form1.addowner_id.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.addtag.label }}<br>
+			{{ form1.addtag(size=32) }}<br>
+			{% for error in form1.addtag.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.addtitle.label }}<br>
+			{{ form1.addtitle(size=32) }}<br>
+			{% for error in form1.addtitle.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.adddescription.label }}<br>
+			{{ form1.adddescription(size=32) }}<br>
+			{% for error in form1.adddescription.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.addkeywords.label }}<br>
+			{{ form1.addkeywords(size=32) }}<br>
+			{% for error in form1.addkeywords.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.addbody.label }}<br>
+			{{ form1.addbody(size=32) }}<br>
+			{% for error in form1.addbody.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>{{ form1.add() }}</p>
+	</fieldset>
+	</form>
+	</td>
+	
+	<td valign="top">
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Delete Page</legend>
+		{{ form2.hidden_tag() }}
+			<p>
+			{{ form2.page_id_del.label }}<br>
+			{{ form2.page_id_del(size=32) }}<br>
+			{% for error in form2.page_id_del.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>{{ form2.delete() }}</p>
+	</fieldset>
+	</form>
+	</td></tr>
+	</table>
+	{% endif %}
+{% endblock %}	

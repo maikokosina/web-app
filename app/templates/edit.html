@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+	{% block content %}
+		<div> 
+		<a href="/mongopages/{{title}}">Back to Page</a>
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		<p></p>
+		
+		<table>
+		<tr><td>
+		{% if check_type == 1 %}
+		<fieldset>
+		<legend>Edit Page: {{ title }}</legend>
+			<form action="/mongopages/{{ title }}/edit/editpage" method="post" novalidate>
+			{{ form1.hidden_tag() }}
+			<p>
+			{{ form1.edittag.label }}<br>
+			{{ form1.edittag(size=32) }}<br>
+			{% for error in form1.edittag.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.editdescription.label }}<br>
+			{{ form1.editdescription(size=32) }}<br>
+			{% for error in form1.editdescription.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.editkeywords.label }}<br>
+			{{ form1.editkeywords(size=32) }}<br>
+			{% for error in form1.editkeywords.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.editbody.label }}<br>
+			{{ form1.editbody(size=32) }}<br>
+			{% for error in form1.editbody.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			<p>
+			<input type="submit" value="Edit Page">
+			</p>
+			</form>
+			
+			<p>
+			Files:
+			{% if arrayfiles == [] %}
+				no files
+			{% else %}
+				<br>
+				{% for filename in arrayfiles %}
+				<form action="/mongopages/{{ title }}/deletefile/{{ filename }}" method="post" novalidate>
+					<p>{{ filename }}
+					<input type="submit" value="Delete"><br></p>
+				</form>
+				{% endfor %}
+			{% endif %}
+			</p>
+			
+			<form action="/mongopages/{{ title }}/edit/addfile" method="post" novalidate enctype="multipart/form-data">
+			<p>
+			<input type="file" id="editfiles" name="editfiles" accept=".jpg, .jpeg, .png, .txt">
+			</p>
+			<p>
+			<input type="submit" value="Add File">
+			</p>
+			</form>
+			
+		</fieldset>
+		</td>
+		
+		<td valign="top">
+		{% endif %}
+		<fieldset>
+			<legend>Access for this page</legend>
+				<p>Read:</p>
+				<p>IDs: 
+				{% for read in readaccess %}
+					{{ read.list }}
+				{% endfor %} </p>
+			
+				<p>Write:</p>
+				<p>IDs: 
+				{% for write in writeaccess %}
+					{{ write.list }}
+				{% endfor %} </p>
+			<form action="/mongopages/{{ title }}/edit/access" method="post">
+			<button type="submit">Edit Access</button>
+			</form>
+		</fieldset>
+		</td></tr>
+		</table>
+	{% endblock %}

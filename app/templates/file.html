@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+	{% block content %}
+		<div> 
+		<a href="/mongopages/{{title}}">Back to Page</a>
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		
+		<h1>File {{ part1 }} from {{ title }}</h1>
+		{% if part2 == 'jpg' or part2 == 'png' or part2 == 'jpeg'%}
+			<img alt="image"
+	src="data:image/png;base64, {{ data }}" width="500px" vspace="5" hspace="5">
+		{% else %}
+			{% for line in lines %}
+				{{ line }}<br>
+			{% endfor %}
+		{% endif %}
+{% endblock %}	

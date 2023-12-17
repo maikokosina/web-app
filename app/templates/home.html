@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div>
+		<a href="{{ url_for('login') }}">Login</a>
+		<a href="{{ url_for('registration') }}">Registration</a>
+	</div>
+	<h1>Hello! This is my first Web App!</h1>
+	<img alt="homegif" src="data:image/png;base64, {{ data }}" width="480" vspace="5" hspace="5">
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+	{% block content %}
+		<div> 
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('data') }}">Back to Data</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+		</div>
+		<h1>Users</h1>
+		<div class="scroll">
+		<table border = "1">
+		<tr><th>ID</th><th>Username</th><th>Password</th><th>Email</th><th>Account status</th><th>Account type</th><th>Is Active</th><th>Signup time</th><th>Last visit</th><th>Avatar</th></tr>
+		
+		{% for line in all_users %}
+		<tr>
+			<td>{{line.user_id}}</td>
+			<td>{{line.user_name}}</td>
+			<td>{{line.password}}</td>
+			<td>{{line.email}}</td>
+			
+			{% if line.account_status == 1 %}
+			<td>Last seen recently</td>
+			{% endif %}
+	
+			{% if line.account_status == 2 %}
+			<td>Last seen a long time ago</td>
+			{% endif %}
+	
+			{% if line.account_status == 3 %}
+			<td>Last seen very long time ago</td>
+			{% endif %}
+	
+			{% if line.account_status == 4 %}
+			<td>Banned</td>
+			{% endif %}
+			
+			{% if line.account_type == 1 %}
+			<td>Administrator</td>
+			{% endif %}
+	
+			{% if line.account_type == 2 %}
+			<td>Editor</td>
+			{% endif %}
+	
+			{% if line.account_type == 3 %}
+			<td>Reader</td>
+			{% endif %}
+	
+			{% if line.account_type == 4 %}
+			<td>Bot</td>
+			{% endif %}
+			
+			<td>{{ line.is_active }}</td>
+			<td>{{ signup1[loop.index-1] }}</td>
+			<td>{{ last1[loop.index-1] }}</td>
+				{% if avatars1[loop.index-1] == ''%}
+					<td><img src="{{ avatars.default(size='s') }}" width="50px" align="middle" vspace="5" hspace="5"></td>
+				{% else %}
+					<td><img alt="avatar"
+	src="data:image/png;base64, {{ avatars1[loop.index-1] }}" width="50px" align="middle" vspace="5" hspace="5"></td>
+				{% endif %}
+		{% endfor %}
+		</tr>	
+		</table>
+		</div>
+	
+	<p></p>
+	
+	<table>
+	<tr><td>
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Add User</legend>
+		{{ form1.hidden_tag() }}
+			<p>
+			{{ form1.user_name.label }}<br>
+			{{ form1.user_name(size=32) }}<br>
+			{% for error in form1.user_name.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.password.label }}<br>
+			{{ form1.password(size=32) }}<br>
+			{% for error in form1.password.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.email1.label }}<br>
+			{{ form1.email1(size=32) }}<br>
+			{% for error in form1.email1.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>
+			{{ form1.account_type.label }}<br>
+			{{ form1.account_type(size=32) }}<br>
+			{% for error in form1.account_type.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>{{ form1.add() }}</p>
+	</fieldset>
+	</form>
+	</td>
+	
+	<td valign="top">
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Delete User</legend>
+		{{ form2.hidden_tag() }}
+			<p>
+			{{ form2.email2.label }}<br>
+			{{ form2.email2(size=32) }}<br>
+			{% for error in form2.email2.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			
+			<p>{{ form2.delete() }}</p>
+	</fieldset>
+	</form>
+	</td></tr>
+	
+	<tr><td>	
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Ban a User</legend>
+		{{ form3.hidden_tag() }}
+			<p>
+			{{ form3.email3.label }}<br>
+			{{ form3.email3(size=32) }}<br>
+			{% for error in form3.email3.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			<p>{{ form3.ban() }}</p>
+	</fieldset>
+	</form>
+	</td>
+	
+	<td>
+	<form action="" method="post" novalidate>
+	<fieldset>
+		<legend>Unban a User</legend>
+		{{ form4.hidden_tag() }}
+			<p>
+			{{ form4.email4.label }}<br>
+			{{ form4.email4(size=32) }}<br>
+			{% for error in form4.email4.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			</p>
+			<p>{{ form4.unban() }}</p>
+	</fieldset>
+	</form>
+	</td></tr>
+	</table>
+	{% endblock %}	

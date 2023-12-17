@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div>
+		<a href="/mongopages/{{title}}/edit">Back to Edit Page</a>
+		<a href="{{ url_for('profile') }}">Profile</a>
+		<a href="{{ url_for('home') }}">Logout</a>
+	</div>
+	<h1>Edit Access for {{ title }}</h1>
+	
+	<table>
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<tr><td>
+			{{ form.editlist.label }}</td>
+		
+		<td>
+			{{ form.typeofprivilege.label }}</td></tr>
+			
+		<tr><td valign="top">
+			<ul>{{ form.editlist(size=32, mutliple = True) }}</ul>
+			{% for error in form.editlist.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</td>
+		<td valign="top">
+			<ul>{{ form.typeofprivilege(size=32) }}</ul>
+			{% for error in form.typeofprivilege.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}</td></tr>
+		<tr><td>
+		<p>{{ form.editacc() }}</p>
+		</td></tr>
+	</form>
+	</table>
+{% endblock %}
